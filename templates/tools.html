@@ -1,0 +1,14 @@
+<li><button type="button" class="hide">Hide</button></li>
+{% if user.is_authenticated %}
+<li><button type="button" class="marker">Add Marker</button></li>
+<li><button type="button" class="markertype">Add Marker Type</button></li>
+<li><button type="button" class="rapid">Add Rapid</button></li>
+<li><button type="button" class="run">Add Run</button></li>
+<li><button type="button" class="gauge">Add Gauge</button></li>
+<li><button type="button" class="river">Add River</button></li>
+<li><button type="button" class="account" id="account" data-id="{{user.id}}">Account</button><li>
+<li><a href="logout/">Log out {{ user.username }}</a></li>
+{% else %}
+<li><button type="button" class="login">Log in</button></li>
+<li><button type="button" class="register">Register</button></li>
+{% endif %}

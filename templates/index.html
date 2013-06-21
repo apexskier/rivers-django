@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Rivers Database</title>
+    <!-- style -->
+    <link rel="stylesheet" href="static/css/normalize.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
+</head>
+
+<body>
+
+    <div class="tools">
+        <header><a href="#" class="brand">Rivers</a></header>
+        <ul class="nav"></ul>
+    </div>
+
+    <div id="main">
+        <div id="map"></div>
+    </div>
+
+    <div class="three-dee"></div>
+
+    <div class="container">
+        <div id="content" class=''>
+        </div>
+    </div>
+
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="static/lib/js/jquery-1.9.1.min.js"><\/script>')</script>
+    <script src="static/lib/js/handlebars.js"></script>
+    <script src="static/lib/js/underscore-min.js"></script>
+    <script src="static/lib/js/backbone-min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+    <script src="static/lib/js/leaflet-gpx/gpx.js"></script>
+    <script src="static/lib/js/rlayer.js"></script>
+    <script src="static/lib/js/fastclick.js"></script>
+    <script src="static/lib/js/jquery.nouislider.min.js"></script>
+    <script src="static/js/app.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src='//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+    -->
+
+    <input type="hidden" id="csrf_token" value="{{ csrf_token }}"/>
+</body>
+</html>
