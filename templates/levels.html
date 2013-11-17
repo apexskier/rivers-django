@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>River Levels</title>
+<!-- style -->
+<link rel="stylesheet" href="/static/css/normalize.css" />
+<link rel="stylesheet" href="/static/lib/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/levels.css" />
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="main" class="container">
+    <div class="row">
+        <div id="content" class="col-xs-12"></div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom" id="mobile-nav">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Levels</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<!-- scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/static/lib/js/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/static/lib/js/underscore-min.js"></script>
+<script src="/static/lib/js/bootstrap.min.js"></script>
+<script src="/static/lib/js/backbone-min.js"></script>
+<!--<script src="/static/lib/js/fastclick.js"></script> -->
+<script src="/static/lib/js/moment.min.js"></script>
+<script src="/static/lib/js/d3.v3.min.js"></script>
+<script type="text/javascript">
+    var utils = {
+        unitsMatch: function(unit1, unit2) {
+            if (unit1 == unit2) {
+                return true;
+            } else if ((unit1 == 'cfs' && unit2 == 'ft3/s') ||
+                       (unit2 == 'cfs' && unit1 == 'ft3/s')) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+</script>
+<script src="/static/js/levels.js"></script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+<script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src='//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+-->
+
+<script type="text/template" id="simple-gauge-list-template">
+    <a href="#detail/<%- id %>"><%- river.name %> - <%- gauge_type %> <%- gauge_id %></a>
+</script>
+<script type="text/template" id="gauge-detail-view">
+    <h2><%- river.name %> <small><%- gauge_type %> <%- gauge_id %></small></h2>
+    <% _.each(data, function(data_type, i) { %>
+        <div id="data_<%- i %>" class="<% if (flow_units == data_type.unit) { %> active<% } %>">
+            <h3><%- data_type.unitDesc %></h3>
+            <%
+                var trend_desc = "stable";
+                if (data_type.trend > 0) {
+                    trend_desc = "rising";
+                } else if (data_type.trend < 0) {
+                    trend_desc = "falling";
+                }
+            %>
+            <p class="lead"><%- data_type.recent %> <%- data_type.unit %> and <%- trend_desc %></p>
+            <div id="graph_<%- i %>" class="graph"></div>
+        </div>
+    <% }); %>
+    </script>
+</body>
+</html>

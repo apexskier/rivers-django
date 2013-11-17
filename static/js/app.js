@@ -1210,8 +1210,14 @@ window.RiverModalView = window.ModalView.extend({
             if (collection.length > 0) {
                 var to_append = "<h4>Runs</h4><ul>";
                 _.each(collection, function(run) {
-                    to_append += '<li><a href="#run/' + run.get('id') + '">' + run.get('name') + '</a></li>';
-                });
+                    to_append += '<li><a href="#run/' + run.get('id') + '">';
+                    if (run.get('name') != "") {
+                        to_append += run.get('name');
+                    } else {
+                        to_append += this.model.get('name');
+                    }
+                    to_append += '</a></li>';
+                }, this);
                 to_append += "</ul>";
                 this.$('#runs').html(to_append);
             } else {

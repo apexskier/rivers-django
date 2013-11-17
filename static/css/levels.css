@@ -1,0 +1,91 @@
+body {
+    margin-bottom: 50px;
+}
+
+#mobile-nav.navbar {
+    margin-bottom: 0;
+    background-color: rgba(247, 247, 247, 0.95);
+    border-top: 1px solid rgb(230, 230, 230);
+    min-height: 30px;
+}
+.navbar i {
+    margin-top: 18px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.carousel-control {
+    position: relative;
+    width: 2em;
+    height: 2em;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    color: #222;
+}
+.carousel-control.right,
+.carousel-control.left {
+    background-image: none;
+}
+.carousel-control.left {
+    float: left;
+}
+.carousel-control.right {
+    float: right;
+}
+.carousel-indicators {
+    bottom: auto;
+    width: 40%;
+    margin-left: -20%;
+    padding-top: 8px;
+}
+.carousel-indicators li {
+    border-color: #222;
+}
+.carousel-indicators .active {
+    background-color: #222;
+}
+.controls .right,
+.controls .left {
+    position: relative;
+    color: #222;
+    font-size: 20px;
+    z-index: 20;
+}
+.controls .right:hover,
+.controls .left:hover {
+    text-decoration: none;
+}
+.controls .left {
+    margin-left: 30%;
+    float: left;
+}
+.controls .right {
+    margin-right: 30%;
+    float: right;
+}
+
+.graph {
+    width: 100%;
+    height: 300px;
+    overflow-y: visible;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.graph .axis {
+    shape-rendering: crispEdges;
+}
+.graph .axis path,
+.graph .grid path {
+    display: none;
+}
+.graph .grid .tick {
+    shape-rendering: crispEdges;
+    stroke: #000;
+    opacity: 0.4;
+}
+.graph .line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1.5px;
+}

@@ -60,6 +60,26 @@ class MarkerTypeResource(ModelResource):
         authentication = CustomAuthentication()
         authorization = DjangoAuthorization()
 
+class SimpleGaugeResource(ModelResource):
+    river = fields.ToOneField(RiverResource, 'river', full=True)
+
+    def hydrate_river(self, bundle):
+        bundle.data['river'] = River.objects.get(id=bundle.data['river'])
+        return bundle
+
+    class Meta:
+        queryset = Gauge.objects.all()
+        allowed_methods = ['get', 'post']
+        authentication = CustomAuthentication()
+        authorization = DjangoAuthorization()
+        filtering = {
+            'river': ALL_WITH_RELATIONS,
+            'gauge_id': ALL,
+            'geo_lat': ALL,
+            'geo_lng': ALL,
+            'id': ALL,
+        }
+
 class GaugeResource(ModelResource):
     river = fields.ToOneField(RiverResource, 'river', full=True)
 
@@ -71,7 +91,7 @@ class GaugeResource(ModelResource):
         import urllib2, time, datetime, re
         if bundle.data['gauge_type'] == "USGS":
             url = "http://waterservices.usgs.gov/nwis/iv/?sites=" + bundle.data['gauge_id'] + "&period=P7D&format=json"
-            request = urllib2.Request(url)
+            request = urllib2.Request(url) # TODO look at python request
             try:
                     response = urllib2.urlopen(request)
             except urllib2.HTTPError, e:
@@ -104,7 +124,10 @@ class GaugeResource(ModelResource):
                     }
                 for item_val in item['values'][0]['value']:
                     # convert usgs time to epoch time, then multiply by 1000 to get highcharts milliseconds time
-                    timestamp = time.mktime(datetime.datetime.strptime(item_val['dateTime'], "%Y-%m-%dT%H:%M:%S.%f-07:00").timetuple()) * 1000
+                    try:
+                        timestamp = time.mktime(datetime.datetime.strptime(item_val['dateTime'], "%Y-%m-%dT%H:%M:%S.%f-07:00").timetuple()) * 1000
+                    except:
+                        timestamp = time.mktime(datetime.datetime.strptime(item_val['dateTime'], "%Y-%m-%dT%H:%M:%S.%f-08:00").timetuple()) * 1000
                     bundle.data['data'][count]['values'].append([
                             timestamp, float(item_val['value'])
                         ])
@@ -131,7 +154,7 @@ class GaugeResource(ModelResource):
             gauge_data = gauge_data[gauge_data.find('DATE'):]
             bundle.data['data'] = {}
             bundle.data['data'][0] = {
-                    'unit': 'cfs',
+                    'unit': 'ft3/s',
                     'unitName': 'Streamflow, ft&#179;/s',
                     'unitDesc': "Discharge, cubic feet per second",
                     'values': []
@@ -169,7 +192,6 @@ class GaugeResource(ModelResource):
             'geo_lng': ALL,
             'id': ALL,
         }
-        cache = CustomCache()
 
 class MarkerResource(ModelResource):
     river = fields.ToOneField(RiverResource, 'river', full=True)

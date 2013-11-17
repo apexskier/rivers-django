@@ -53,11 +53,11 @@ class Gauge(models.Model):
     geo_lat = models.DecimalField('latitude', max_digits=13, decimal_places=10, blank=True, null=True, unique=True)
     geo_lng = models.DecimalField('longitude', max_digits=13, decimal_places=10, blank=True, null=True, unique=True)
     FLOW_UNITS_CHOICES = (
-        ('cfs', 'cfs'),
+        ('ft3/s', 'cfs'),
         ('ft',  'feet'),
         ('m',   'meters'),
     )
-    flow_units = models.CharField(max_length=3, choices=FLOW_UNITS_CHOICES)
+    flow_units = models.CharField(max_length=8, choices=FLOW_UNITS_CHOICES)
 
     def __unicode__(self):
         return str(self.river) + ' ' + self.gauge_id

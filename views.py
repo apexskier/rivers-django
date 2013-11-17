@@ -12,6 +12,9 @@ def index(request):
     c.update(csrf(request))
     return render(request, 'index.html')
 
+def levels(request):
+    return render(request, 'levels.html')
+
 def tools(request):
     return render(request, 'tools.html')
 
